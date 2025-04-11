@@ -211,28 +211,42 @@ function showInfoPanel(data) {
             <p>Native Species: ${data.reforestation.nativeSpecies.join(', ')}</p>
         </div>
         <div class="info-item">
-            <a href="#" id="json-link">View as JSON</a>
+            <a href="#" id="generateReport-link">Generate Report</a>
+
         </div>
     `;
 
-    document.getElementById('json-link').addEventListener('click', async (e) => {
+    document.getElementById('generateReport-link').addEventListener('click', async (e) => {
         e.preventDefault();
         const jsonString = JSON.stringify(data, null, 4);
-    
+        console.log(jsonString);
+        
         try {
-            const response = await fetch('http://localhost:3000/info', {
+
+            const response = await fetch('http://localhost:3000/generateReport',{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: jsonString
             });
-    
-            if (response.ok) {
-                window.open('http://localhost:5173/', '_blank');
+            // const response = await fetch('http://localhost:3000/info', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: jsonString
+            // });
+            const data = await response.json();
+
+            if (data.redirect) {
+                sessionStorage.setItem('reportData', data.response);
+                window.location.href = 'report.html';
             } else {
-                console.error('Failed to send data');
+                console.error('Report generation failed.:');
             }
+
+            // console.log(result.response)
         } catch (err) {
             console.error('Error:', err);
         }

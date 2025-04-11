@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tree Species Recommendation Report</title>
+    <style>
+        body {
+            padding: 2rem;
+            font-family: sans-serif;
+        }
+
+        h4 {
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        h5 {
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f3f4f6;
+        }
+
+        tr {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .button-primary {
+            background-color: #1976d2;
+            color: white;
+        }
+
+        .button-outlined {
+            background-color: transparent;
+            border: 1px solid #1976d2;
+            color: #1976d2;
+            margin-left: 1rem;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <h4>Tree Species Recommendation Report</h4>
+
+        <div class="card">
+            <h5>Recommended Tree Species</h5>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Scientific Name</th>
+                        <th>Common Name(s)</th>
+                        <th>Growth Rate (m/year)</th>
+                        <th>Carbon Sequestration (kg CO2/tree/year)</th>
+                        <th>Suitability Details</th>
+                    </tr>
+                </thead>
+                <tbody id="speciesTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h5>Important Considerations</h5>
+            <ul id="considerationsList">
+            </ul>
+        </div>
+
+        <button class="button button-primary" onclick="downloadReport()">Download Report as PDF</button>
+
+        <button class="button button-outlined" onclick="goBack()">Go Back</button>
+    </div>
+
+    <script>
+
+        function getApiResponse() {
+            // Replace with your actual data retrieval method
+            return sessionStorage.getItem('reportData');
+        }
+
+        function populateReport() {
+            // const formData = getFormData();
+            const apiResponse = getApiResponse();
+            console.log(apiResponse)
+            if (!apiResponse) {
+                return;
+            }
+
+            const tableBody = document.getElementById('speciesTableBody');
+            const considerationsList = document.getElementById('considerationsList');
+
+            apiResponse.split('\n').forEach((line) => {
+                if (line.startsWith('|')) {
+                    const cells = line.split('|').filter((cell) => cell.trim() !== '');
+                    const row = document.createElement('tr');
+                    cells.forEach((cell) => {
+                        const td = document.createElement('td');
+                        td.textContent = cell.trim();
+                        row.appendChild(td);
+                    });
+                    tableBody.appendChild(row);
+                } else if (line.startsWith('* ')) {
+                    const li = document.createElement('li');
+                    li.textContent = line.replace('* ', '');
+                    considerationsList.appendChild(li);
+                }
+            });
+        }
+
+        function downloadReport() {
+            // Implement your PDF download logic here
+            alert("Download functionality not implemented in this example.");
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        populateReport();
+
+    </script>
+</body>
+</html>

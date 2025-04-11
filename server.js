@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
@@ -11,6 +12,11 @@ const io = require('socket.io')(http, {
 
 app.use(cors());
 app.use(express.static('public'));
+
+
+// Initialize Google Generative AI
+const genAI = new GoogleGenerativeAI("AIzaSyDJRwS9ubHixhCyMe1lcpJHigpyrTLSfUk"); // Store API key in .env
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // Mock database
 let alerts = [
@@ -100,3 +106,41 @@ app.get('/api/climate-proxy', async (req, res) => {
         res.status(500).send('Error fetching climate data');
     }
 });
+
+
+// POST endpoint to receive environmental data and generate a response
+app.post("/generateReport", async (req, res) => {
+    const parameters = req.body;
+
+    // Validate input data
+    // if (!soilType || !climate || !rainfall || !altitude || !latitude || !longitude) {
+    //     return res.status(400).json({ success: false, message: "All fields are required" });
+    // }
+
+    // Generate the prompt
+    const prompt = generateSpeciesRecommendationPrompt(parameters);
+
+    try {
+        // Send the prompt to the Gemini API
+        const result = await model.generateContent(prompt);
+        const responseText = result.response.text();
+
+        // Send the Gemini API response back to the client
+        res.status(200).json({ success: true, response: responseText, redirect: true  });
+    } catch (error) {
+        console.error("Error calling Gemini API:", error);
+        res.status(500).json({ success: false, message: "Failed to generate response" });
+    }
+});
+
+// Function to generate the prompt
+function generateSpeciesRecommendationPrompt(parameters) {
+    // console.log(parameters)
+    return `
+    Based on the following parameters, generate a plan to help in reforestation.
+    Suggest atleast 6 tree species to plant according to area and climate. For the tree species give their local name, scientific name, climate they grow in, time till maturity, and other details.
+    Give other key considerations. Give carbon sequestration details too.
+    ${JSON.stringify(parameters)}
+    `;
+}
+
