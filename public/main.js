@@ -6,6 +6,10 @@ let heatLayer, searchMarker = null;
 let vegetationChart, carbonChart, deforestationChart;
 let currentLocation = { lat: -3.4653, lng: -62.2159 };
 
+// Add these with your other chart variables
+let vegetationPredictionChart, carbonPredictionChart, deforestationPredictionChart;
+let predictionData = {};
+
 // Add this with your other constants at the top of main.js
 const proxyUrl = 'http://localhost:3000/api/climate-proxy?url=';
 
@@ -519,7 +523,176 @@ function closeReforestationPanel() {
     document.getElementById('reforestation-panel').classList.remove('active');
 }
 
-// Update your map click handler to include this:
+
+
+/**
+ * Uses historical data to predict future trends using linear regression
+ * @param {Array} historicalData - Array of historical values
+ * @param {Array} years - Array of year labels
+ * @param {number} futureYears - Number of years to predict
+ * @returns {Object} - Contains predicted values and future year labels
+ */
+function predictFutureTrends(historicalData, years, futureYears = 5) {
+    // Simple linear regression implementation
+    const n = historicalData.length;
+    let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+    
+    // Calculate regression coefficients
+    historicalData.forEach((y, i) => {
+        sumX += i;
+        sumY += y;
+        sumXY += i * y;
+        sumXX += i * i;
+    });
+    
+    const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    const intercept = (sumY - slope * sumX) / n;
+    
+    // Generate predictions
+    const predictions = [];
+    const futureLabels = [];
+    const lastYear = parseInt(years[years.length - 1]);
+    
+    for (let i = 0; i < futureYears; i++) {
+        const x = n + i;
+        predictions.push(slope * x + intercept);
+        futureLabels.push((lastYear + i + 1).toString());
+    }
+    
+    return {
+        predictions,
+        futureLabels,
+        slope,
+        intercept
+    };
+}
+
+async function generatePredictions(lat, lng) {
+    try {
+        // Get historical data
+        const historicalData = await fetchReforestationData(lat, lng);
+        
+        // Predict each metric
+        const vegetationPrediction = predictFutureTrends(historicalData.ndvi, historicalData.dates);
+        const carbonPrediction = predictFutureTrends(historicalData.carbon, historicalData.dates);
+        const deforestationPrediction = predictFutureTrends(historicalData.deforestation, historicalData.dates);
+        
+        return {
+            historical: historicalData,
+            predictions: {
+                vegetation: vegetationPrediction,
+                carbon: carbonPrediction,
+                deforestation: deforestationPrediction
+            }
+        };
+    } catch (error) {
+        console.error("Prediction error:", error);
+        return null;
+    }
+}
+
+function createVegetationPredictionChart(data) {
+    const ctx = document.getElementById('vegetationPredictionChart');
+    if (vegetationPredictionChart) vegetationPredictionChart.destroy();
+    
+    vegetationPredictionChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [...data.historical.dates, ...data.predictions.vegetation.futureLabels],
+            datasets: [
+                {
+                    label: 'Historical NDVI',
+                    data: [...data.historical.ndvi, ...Array(data.predictions.vegetation.predictions.length).fill(null)],
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Predicted NDVI',
+                    data: [...Array(data.historical.ndvi.length).fill(null), ...data.predictions.vegetation.predictions],
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: true
+                }
+            ]
+        },
+        options: getChartOptions('Vegetation Index Prediction', { min: 0, max: 1 })
+    });
+}
+
+// Similar functions for carbon and deforestation predictions...
+function createCarbonPredictionChart(data) {
+    const ctx = document.getElementById('carbonPredictionChart');
+    if (carbonPredictionChart) carbonPredictionChart.destroy();
+    
+    carbonPredictionChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [...data.historical.dates, ...data.predictions.carbon.futureLabels],
+            datasets: [
+                {
+                    label: 'Historical Carbon',
+                    data: [...data.historical.carbon, ...Array(data.predictions.carbon.predictions.length).fill(null)],
+                    borderColor: '#2196F3',
+                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Predicted Carbon',
+                    data: [...Array(data.historical.carbon.length).fill(null), ...data.predictions.carbon.predictions],
+                    borderColor: '#2196F3',
+                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: true
+                }
+            ]
+        },
+        options: getChartOptions('Carbon Sequestration Prediction', { beginAtZero: true })
+    });
+}
+
+function createDeforestationPredictionChart(data) {
+    const ctx = document.getElementById('deforestationPredictionChart');
+    if (deforestationPredictionChart) deforestationPredictionChart.destroy();
+    
+    deforestationPredictionChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [...data.historical.dates, ...data.predictions.deforestation.futureLabels],
+            datasets: [
+                {
+                    label: 'Historical Risk',
+                    data: [...data.historical.deforestation, ...Array(data.predictions.deforestation.predictions.length).fill(null)],
+                    borderColor: '#f44336',
+                    backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Predicted Risk',
+                    data: [...Array(data.historical.deforestation.length).fill(null), ...data.predictions.deforestation.predictions],
+                    borderColor: '#f44336',
+                    backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: true
+                }
+            ]
+        },
+        options: getChartOptions('Deforestation Risk Prediction', { min: 0, max: 100 })
+    });
+}
+
+function showPredictionPanel() {
+    document.getElementById('prediction-panel').classList.add('active');
+}
+
+function closePredictionPanel() {
+    document.getElementById('prediction-panel').classList.remove('active');
+}
+
 map.on('click', async (e) => {
     showLoading();
     const { lat, lng } = e.latlng;
@@ -528,11 +701,19 @@ map.on('click', async (e) => {
     const info = await getLocationInfo(lat, lng);
     showInfoPanel(info);
     
-    // Load and show reforestation data
+    // Load and show historical data
     const reforestationData = await fetchReforestationData(lat, lng);
     createVegetationChart(reforestationData);
     createCarbonChart(reforestationData);
     createDeforestationChart(reforestationData);
+    
+    // Generate and show predictions
+    predictionData = await generatePredictions(lat, lng);
+    if (predictionData) {
+        createVegetationPredictionChart(predictionData);
+        createCarbonPredictionChart(predictionData);
+        createDeforestationPredictionChart(predictionData);
+    }
 });
 
 // Initialize map

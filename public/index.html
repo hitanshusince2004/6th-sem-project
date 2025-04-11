@@ -155,6 +155,24 @@ button[onclick="showReforestationPanel()"] {
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
+        #prediction-panel {
+            position: fixed;
+            right: -390px;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            padding: 20px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        #prediction-panel.active {
+            right: 0;
+        }
+
 /* Hover effect */
 button[onclick="showReforestationPanel()"]:hover {
     background-color: #45a049; /* Darker green */
@@ -186,10 +204,11 @@ button[onclick="showReforestationPanel()"]:focus {
 
     <div id="map"></div>
     <div id="info-panel">
+        <button class="show-reforestation-btn" onclick="showReforestationPanel()">Show Reforestation Data</button>
+        <button class="btn" onclick="showPredictionPanel()">Show 5-Year Predictions</button>
         <div class="panel-header">
             <h3>Location Details</h3>
             <button onclick="closePanel()">&times;</button>
-            <button class="show-reforestation-btn" onclick="showReforestationPanel()">Show Reforestation Data</button>
         </div>
         <div id="location-info">
             <div class="loader"></div>
@@ -210,6 +229,23 @@ button[onclick="showReforestationPanel()"]:focus {
         </div>
         <div class="chart-container">
             <canvas id="deforestationChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Add this after your reforestation panel -->
+    <div id="prediction-panel" class="panel">
+        <div class="panel-header">
+            <h3>5-Year AI Predictions</h3>
+            <button onclick="closePredictionPanel()">&times;</button>
+        </div>
+        <div class="chart-container">
+            <canvas id="vegetationPredictionChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="carbonPredictionChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="deforestationPredictionChart"></canvas>
         </div>
     </div>
 
