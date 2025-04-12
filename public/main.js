@@ -273,7 +273,7 @@ async function fetchReforestationData(lat, lng) {
         const geoResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
         const geoData = await geoResponse.json();
         const countryCode = geoData.address?.country_code?.toUpperCase();
-        
+        console.log(countryCode)
         if (!countryCode) {
             throw new Error("Could not determine country code");
         }
