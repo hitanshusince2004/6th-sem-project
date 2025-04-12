@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Forest Watch - Reforestation Project</title>
+  <title>Forest Watch - Global Reforestation Initiative</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join Forest Watch in our mission to restore global forests through technology, community action, and sustainable practices. Monitor deforestation and participate in reforestation efforts.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
     /* Reset + Base */
     :root {
@@ -13,8 +14,10 @@
       --dark-green: #1b5e20;
       --light-green: #e8f5e9;
       --accent-green: #558b2f;
+      --accent-orange: #ff8f00;
       --text-dark: #333;
       --text-light: #f4f7f6;
+      --section-spacing: 100px;
     }
     
     * {
@@ -25,136 +28,250 @@
     
     body {
       font-family: 'Poppins', sans-serif;
-      line-height: 1.6;
+      line-height: 1.7;
       background-color: #f4f7f6;
       color: var(--text-dark);
       scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .section-padding {
+      padding: var(--section-spacing) 0;
     }
     
     /* Hero Section */
     .hero-section {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                  url('https://images.unsplash.com/photo-1508780709619-79562169bc64') center/cover no-repeat;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), 
+                  url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat fixed;
       height: 100vh;
+      min-height: 800px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       color: white;
-      padding: 0 20px;
       position: relative;
       overflow: hidden;
     }
     
     .hero-content {
-      max-width: 800px;
+      max-width: 1000px;
       z-index: 2;
       animation: fadeInUp 1s ease-out;
+      padding: 0 30px;
     }
     
     .hero-content h1 {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      font-size: 4.5rem;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+      line-height: 1.2;
     }
     
     .hero-content p {
-      font-size: 1.3rem;
-      margin-bottom: 40px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      font-size: 1.5rem;
+      margin-bottom: 50px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
     .btn {
       display: inline-block;
       background-color: var(--primary-green);
       color: white;
-      padding: 14px 30px;
+      padding: 18px 40px;
       border-radius: 50px;
       text-decoration: none;
       font-weight: 600;
-      transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
+      font-size: 1.1rem;
+      transition: all 0.4s;
+      box-shadow: 0 6px 20px rgba(46, 125, 50, 0.5);
       position: relative;
       overflow: hidden;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
     
     .btn:hover {
       background-color: var(--dark-green);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(46, 125, 50, 0.6);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(46, 125, 50, 0.7);
     }
     
     .btn:active {
-      transform: translateY(1px);
+      transform: translateY(2px);
     }
     
-    .btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, transparent 10%, rgba(255,255,255,0.2) 50%, transparent 90%);
-      transform: translateX(-100%);
-      transition: transform 0.6s ease;
+    .btn-outline {
+      background: transparent;
+      border: 2px solid white;
+      margin-left: 20px;
     }
     
-    .btn:hover::after {
-      transform: translateX(100%);
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.2);
     }
     
-    /* Animated floating leaves */
+    .btn-accent {
+      background-color: var(--accent-orange);
+      box-shadow: 0 6px 20px rgba(255, 143, 0, 0.4);
+    }
+    
+    .btn-accent:hover {
+      background-color: #e65100;
+    }
+    
+    /* Animated elements */
     .leaf {
       position: absolute;
       background-size: contain;
       background-repeat: no-repeat;
-      opacity: 0.7;
+      opacity: 0.8;
       z-index: 1;
       animation: float 15s linear infinite;
+      filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
     }
     
     .leaf:nth-child(1) {
       background-image: url('https://www.svgrepo.com/show/530597/leaf.svg');
-      width: 50px;
-      height: 50px;
-      top: 10%;
-      left: 5%;
+      width: 80px;
+      height: 80px;
+      top: 15%;
+      left: 8%;
       animation-delay: 0s;
+      animation-duration: 20s;
     }
     
     .leaf:nth-child(2) {
       background-image: url('https://www.svgrepo.com/show/530597/leaf.svg');
-      width: 40px;
-      height: 40px;
-      top: 20%;
-      left: 80%;
-      animation-delay: 2s;
-      animation-duration: 12s;
+      width: 60px;
+      height: 60px;
+      top: 25%;
+      left: 85%;
+      animation-delay: 3s;
+      animation-duration: 18s;
     }
     
     .leaf:nth-child(3) {
       background-image: url('https://www.svgrepo.com/show/530597/leaf.svg');
-      width: 60px;
-      height: 60px;
-      top: 70%;
-      left: 10%;
-      animation-delay: 4s;
-      animation-duration: 18s;
+      width: 100px;
+      height: 100px;
+      top: 75%;
+      left: 15%;
+      animation-delay: 5s;
+      animation-duration: 25s;
     }
     
-    /* Benefits Section */
-    .benefits-section {
-      padding: 80px 20px;
+    .leaf:nth-child(4) {
+      background-image: url('https://www.svgrepo.com/show/530597/leaf.svg');
+      width: 50px;
+      height: 50px;
+      top: 60%;
+      left: 80%;
+      animation-delay: 2s;
+      animation-duration: 15s;
+    }
+    
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
       text-align: center;
-      background: var(--light-green);
+      opacity: 0.8;
+      animation: bounce 2s infinite;
+    }
+    
+    .scroll-indicator span {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+    }
+    
+    .mouse {
+      width: 30px;
+      height: 50px;
+      border: 2px solid white;
+      border-radius: 15px;
+      margin: 0 auto;
       position: relative;
     }
     
+    .wheel {
+      width: 4px;
+      height: 8px;
+      background: white;
+      border-radius: 2px;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollWheel 2s infinite;
+    }
+    
+    /* About Section */
+    .about-section {
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+    
+    .about-text {
+      flex: 1;
+    }
+    
+    .about-image {
+      flex: 1;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      transform: rotate(-2deg);
+      transition: transform 0.5s;
+    }
+    
+    .about-image:hover {
+      transform: rotate(0deg);
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s;
+    }
+    
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+    
     .section-title {
-      font-size: 2.5rem;
+      font-size: 3rem;
       color: var(--dark-green);
-      margin-bottom: 50px;
+      margin-bottom: 30px;
       position: relative;
       display: inline-block;
     }
@@ -162,198 +279,386 @@
     .section-title::after {
       content: '';
       position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: -15px;
+      left: 0;
       width: 80px;
-      height: 4px;
+      height: 5px;
       background-color: var(--accent-green);
-      border-radius: 2px;
+      border-radius: 3px;
     }
     
-    .benefits-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 40px;
+      max-width: 700px;
     }
     
-    .benefit {
+    /* Features Section */
+    .features-section {
+      background: var(--light-green);
+      position: relative;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+    
+    .feature-card {
       background: white;
-      padding: 30px;
-      width: 320px;
+      padding: 40px 30px;
       border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      transition: transform 0.4s, box-shadow 0.4s;
       position: relative;
       overflow: hidden;
+      border-top: 5px solid var(--accent-green);
     }
     
-    .benefit:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    .feature-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
     }
     
-    .benefit h3 {
-      margin-bottom: 15px;
+    .feature-card h3 {
+      margin-bottom: 20px;
       color: var(--primary-green);
-      font-size: 1.4rem;
+      font-size: 1.6rem;
     }
     
-    .benefit p {
-      font-size: 1rem;
-      color: #555;
-    }
-    
-    .benefit-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: var(--accent-green);
-    }
-    
-    /* Stats Counter */
-    .stats-section {
-      background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
-    }
-    
-    .stats-container {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      max-width: 1000px;
-      margin: 0 auto;
-      gap: 30px;
-    }
-    
-    .stat-item {
-      flex: 1;
-      min-width: 200px;
-    }
-    
-    .stat-number {
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    
-    .stat-label {
+    .feature-card p {
       font-size: 1.1rem;
-      opacity: 0.9;
-    }
-    
-    /* Blog Section */
-    .blog-section {
-      padding: 80px 20px;
-      background: #f1f8e9;
-      text-align: center;
-    }
-    
-    .blog-cards {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .blog-card {
-      background: white;
-      width: 350px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      overflow: hidden;
-      text-align: left;
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
-    }
-    
-    .blog-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-    }
-    
-    .blog-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      transition: transform 0.5s;
-    }
-    
-    .blog-card:hover img {
-      transform: scale(1.05);
-    }
-    
-    .blog-card-content {
-      padding: 25px;
-    }
-    
-    .blog-card h3 {
-      margin-bottom: 15px;
-      color: var(--accent-green);
-      font-size: 1.3rem;
-    }
-    
-    .blog-card p {
-      margin-bottom: 20px;
       color: #555;
+      margin-bottom: 25px;
     }
     
-    .read-more {
-      display: inline-block;
+    .feature-icon {
+      font-size: 3.5rem;
+      margin-bottom: 25px;
+      color: var(--accent-green);
+    }
+    
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
       color: var(--primary-green);
       font-weight: 600;
       text-decoration: none;
       transition: color 0.3s;
     }
     
-    .read-more:hover {
-      color: var(--dark-green);
-    }
-    
-    .read-more i {
-      margin-left: 5px;
+    .feature-link i {
+      margin-left: 8px;
       transition: transform 0.3s;
     }
     
-    .read-more:hover i {
+    .feature-link:hover {
+      color: var(--dark-green);
+    }
+    
+    .feature-link:hover i {
       transform: translateX(5px);
+    }
+    
+    /* Stats Counter */
+    .stats-section {
+      background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+      color: white;
+      text-align: center;
+      position: relative;
+      padding: 80px 0;
+    }
+    
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 50px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .stat-item {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .stat-number {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .stat-label {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .stat-label::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background-color: var(--accent-orange);
+    }
+    
+    /* Impact Section */
+    .impact-section {
+      background: white;
+    }
+    
+    .impact-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .tab-btn {
+      padding: 15px 30px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .tab-btn.active {
+      background: var(--primary-green);
+      color: white;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .impact-item {
+      background: var(--light-green);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    
+    .impact-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    
+    .impact-text {
+      padding: 25px;
+    }
+    
+    .impact-text h3 {
+      color: var(--dark-green);
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+    
+    /* Map Section */
+    .map-section {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511497584788-876760111969') center/cover fixed;
+      color: white;
+      text-align: center;
+      padding: 120px 0;
+    }
+    
+    .map-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 50px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .map-container h2 {
+      margin-bottom: 30px;
+    }
+    
+    .map-placeholder {
+      height: 500px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 40px;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.8);
+    }
+    
+    /* Testimonials */
+    .testimonials-section {
+      background: var(--light-green);
+    }
+    
+    .testimonials-slider {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .testimonial {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      margin: 20px;
+      position: relative;
+    }
+    
+    .testimonial::before {
+      content: '\201C';
+      font-family: Georgia, serif;
+      font-size: 5rem;
+      color: var(--light-green);
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      line-height: 1;
+    }
+    
+    .testimonial-content {
+      position: relative;
+      z-index: 1;
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-bottom: 25px;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .testimonial-author img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+    
+    .author-info h4 {
+      color: var(--dark-green);
+      margin-bottom: 5px;
+    }
+    
+    .author-info p {
+      color: #777;
+      font-size: 0.9rem;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+      color: white;
+      text-align: center;
+      padding: 100px 0;
+    }
+    
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .cta-content h2 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+    }
+    
+    .cta-content p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
     
     /* Newsletter */
     .newsletter-section {
       background: white;
-      padding: 60px 20px;
       text-align: center;
     }
     
     .newsletter-container {
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto;
       background: var(--light-green);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      padding: 60px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .newsletter-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: url('https://www.svgrepo.com/show/530597/leaf.svg') center/contain no-repeat;
+      opacity: 0.1;
     }
     
     .newsletter-form {
       display: flex;
-      margin-top: 30px;
+      margin-top: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
     .newsletter-input {
       flex: 1;
-      padding: 15px;
+      padding: 18px 25px;
       border: 2px solid #ddd;
       border-radius: 50px 0 0 50px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       outline: none;
-      transition: border-color 0.3s;
+      transition: all 0.3s;
     }
     
     .newsletter-input:focus {
@@ -364,10 +669,11 @@
       background: var(--primary-green);
       color: white;
       border: none;
-      padding: 0 30px;
+      padding: 0 40px;
       border-radius: 0 50px 50px 0;
       cursor: pointer;
       font-weight: 600;
+      font-size: 1.1rem;
       transition: background 0.3s;
     }
     
@@ -379,28 +685,45 @@
     footer {
       background: var(--dark-green);
       color: white;
-      padding: 50px 20px 20px;
-      text-align: center;
+      padding-top: 80px;
     }
     
     .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 50px;
       max-width: 1200px;
       margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 40px;
-      text-align: left;
-    }
-    
-    .footer-column {
-      flex: 1;
-      min-width: 250px;
+      padding: 0 20px;
     }
     
     .footer-column h3 {
+      margin-bottom: 25px;
+      font-size: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-orange);
+    }
+    
+    .footer-logo {
+      font-size: 1.8rem;
+      font-weight: 700;
       margin-bottom: 20px;
-      font-size: 1.3rem;
+      display: inline-block;
+    }
+    
+    .footer-about p {
+      margin-bottom: 25px;
+      opacity: 0.8;
     }
     
     .footer-links {
@@ -408,56 +731,92 @@
     }
     
     .footer-links li {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
     
     .footer-links a {
       color: #ddd;
       text-decoration: none;
-      transition: color 0.3s;
+      transition: all 0.3s;
+      display: inline-block;
+      position: relative;
+    }
+    
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: white;
+      transition: width 0.3s;
     }
     
     .footer-links a:hover {
       color: white;
+      transform: translateX(5px);
+    }
+    
+    .footer-links a:hover::after {
+      width: 20px;
+    }
+    
+    .contact-info {
+      list-style: none;
+    }
+    
+    .contact-info li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .contact-info i {
+      margin-right: 15px;
+      color: var(--accent-orange);
     }
     
     .social-links {
       display: flex;
       gap: 15px;
-      margin-top: 20px;
+      margin-top: 25px;
     }
     
     .social-links a {
       color: white;
       background: rgba(255,255,255,0.1);
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s;
+      transition: all 0.3s;
+      font-size: 1.2rem;
     }
     
     .social-links a:hover {
-      background: rgba(255,255,255,0.2);
+      background: var(--accent-orange);
+      transform: translateY(-3px);
     }
     
     .copyright {
-      margin-top: 40px;
-      padding-top: 20px;
+      margin-top: 80px;
+      padding: 25px 0;
+      text-align: center;
       border-top: 1px solid rgba(255,255,255,0.1);
       font-size: 0.9rem;
-      opacity: 0.8;
+      opacity: 0.7;
     }
     
     /* Back to Top Button */
     .back-to-top {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
+      bottom: 40px;
+      right: 40px;
+      width: 60px;
+      height: 60px;
       background: var(--primary-green);
       color: white;
       border-radius: 50%;
@@ -465,11 +824,12 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s;
+      transition: all 0.4s;
       z-index: 100;
+      font-size: 1.5rem;
     }
     
     .back-to-top.visible {
@@ -478,19 +838,28 @@
     }
     
     .back-to-top:hover {
-      background: var(--dark-green);
-      transform: translateY(-5px);
+      background: var(--accent-orange);
+      transform: translateY(-5px) scale(1.1);
     }
     
     /* Animations */
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(50px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
       }
     }
     
@@ -499,15 +868,75 @@
         transform: translateY(0) rotate(0deg);
       }
       50% {
-        transform: translateY(-20px) rotate(10deg);
+        transform: translateY(-30px) rotate(15deg);
       }
       100% {
-        transform: translateY(0) rotate(20deg);
+        transform: translateY(0) rotate(30deg);
+      }
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+      }
+      40% {
+        transform: translateY(-20px) translateX(-50%);
+      }
+      60% {
+        transform: translateY(-10px) translateX(-50%);
+      }
+    }
+    
+    @keyframes scrollWheel {
+      0% {
+        transform: translateY(0) translateX(-50%);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(15px) translateX(-50%);
+        opacity: 0;
       }
     }
     
     /* Responsive */
+    @media (max-width: 1200px) {
+      .hero-content h1 {
+        font-size: 3.8rem;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+      }
+    }
+    
     @media (max-width: 992px) {
+      .hero-content h1 {
+        font-size: 3.2rem;
+      }
+      
+      .hero-content p {
+        font-size: 1.3rem;
+      }
+      
+      .about-content {
+        flex-direction: column;
+      }
+      
+      .about-image {
+        margin-top: 40px;
+        max-width: 600px;
+      }
+      
+      .section-padding {
+        padding: 80px 0;
+      }
+      
+      .stat-number {
+        font-size: 3.5rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
       .hero-content h1 {
         font-size: 2.8rem;
       }
@@ -515,21 +944,13 @@
       .hero-content p {
         font-size: 1.1rem;
       }
-    }
-    
-    @media (max-width: 768px) {
-      .hero-content h1 {
+      
+      .section-title {
         font-size: 2.2rem;
       }
       
-      .section-title {
-        font-size: 2rem;
-      }
-      
-      .benefits-container,
-      .blog-cards {
-        flex-direction: column;
-        align-items: center;
+      .features-grid {
+        grid-template-columns: 1fr;
       }
       
       .newsletter-form {
@@ -543,25 +964,60 @@
       
       .newsletter-btn {
         border-radius: 50px;
-        padding: 15px;
+        padding: 18px;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn-outline {
+        margin-left: 0;
+        margin-top: 15px;
+      }
+      
+      .map-container {
+        padding: 30px 20px;
+      }
+      
+      .back-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
       }
     }
     
     @media (max-width: 576px) {
       .hero-content h1 {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
       }
       
       .btn {
-        padding: 12px 25px;
+        padding: 15px 30px;
+        font-size: 1rem;
       }
       
-      .stat-item {
-        min-width: 150px;
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .section-title::after {
+        bottom: -10px;
+        height: 3px;
       }
       
       .stat-number {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+      }
+      
+      .stat-label {
+        font-size: 1.1rem;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -574,19 +1030,20 @@
     <div class="leaf"></div>
     <div class="leaf"></div>
     <div class="leaf"></div>
+    <div class="leaf"></div>
     
     <div class="hero-content">
-      <h1>🌍 Forest Watch</h1>
-      <p>We are monitoring forest conditions and promoting reforestation through technology and awareness.</p>
+      <h1>Protect Our Planet's Lungs</h1>
+      <p>Forest Watch is a global initiative using cutting-edge technology and community action to monitor deforestation and drive reforestation efforts worldwide.</p>
       <div class="hero-buttons">
-        <a href="index.html" class="btn">Explore Live Map</a>
-        <a href="#about" class="btn" style="background: transparent; border: 2px solid white; margin-left: 15px;">Learn More</a>
+        <a href="/public/index.html" class="btn">View Deforestation Map</a>
+        <a href="#get-involved" class="btn btn-outline">Join Our Movement</a>
       </div>
     </div>
     
     <!-- Scroll indicator -->
     <div class="scroll-indicator">
-      <span>Scroll Down</span>
+      <span>SCROLL DOWN</span>
       <div class="mouse">
         <div class="wheel"></div>
       </div>
@@ -594,128 +1051,372 @@
   </header>
 
   <!-- About Section -->
-  <section id="about" class="benefits-section">
-    <h2 class="section-title">Why Reforestation Matters</h2>
-    <div class="benefits-container">
-      <div class="benefit">
-        <div class="benefit-icon">🌱</div>
-        <h3>Fights Climate Change</h3>
-        <p>Forests absorb CO₂ and cool the planet. Planting trees helps tackle global warming by sequestering carbon and regulating temperatures.</p>
+  <section id="about" class="about-section section-padding">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2 class="section-title">Our Mission</h2>
+          <p class="section-subtitle">Forest Watch combines satellite monitoring, AI analysis, and grassroots action to combat deforestation and promote sustainable reforestation.</p>
+          <p>Every year, we lose 10 million hectares of forest—an area larger than Portugal. Our platform provides real-time deforestation alerts, tracks restoration progress, and connects volunteers with local conservation projects.</p>
+          <p>Since 2015, we've empowered communities in 12 countries to protect and restore their forests through education, technology, and sustainable livelihood programs.</p>
+          <a href="#" class="btn" style="margin-top: 30px;">Learn About Our Approach</a>
+        </div>
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Forest conservation team">
+        </div>
       </div>
-      <div class="benefit">
-        <div class="benefit-icon">💧</div>
-        <h3>Restores Water Cycle</h3>
-        <p>Trees regulate rainfall and protect watersheds, maintaining clean water flow and preventing soil erosion and desertification.</p>
-      </div>
-      <div class="benefit">
-        <div class="benefit-icon">🐿️</div>
-        <h3>Saves Wildlife</h3>
-        <p>Forests are home to 80% of terrestrial biodiversity. Reforestation revives habitats and protects endangered species.</p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section section-padding">
+    <div class="container">
+      <h2 class="section-title">How We Make an Impact</h2>
+      <p class="section-subtitle">Our comprehensive approach addresses deforestation from multiple angles for maximum effectiveness.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-satellite-dish"></i></div>
+          <h3>Satellite Monitoring</h3>
+          <p>Our AI analyzes satellite imagery to detect deforestation in near real-time, allowing rapid response to illegal logging and fires.</p>
+          <a href="#" class="feature-link">Explore our data <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-tree"></i></div>
+          <h3>Reforestation Programs</h3>
+          <p>We've developed science-backed planting techniques that achieve 85%+ survival rates for new saplings in diverse ecosystems.</p>
+          <a href="#" class="feature-link">See our projects <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-users"></i></div>
+          <h3>Community Engagement</h3>
+          <p>We train and equip local communities to monitor and protect their forests while developing sustainable livelihoods.</p>
+          <a href="#" class="feature-link">Meet our partners <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Education Initiatives</h3>
+          <p>Our school programs have reached 50,000+ students with environmental curriculum and hands-on planting experiences.</p>
+          <a href="#" class="feature-link">Access resources <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Policy Advocacy</h3>
+          <p>We provide governments with data and tools to strengthen forest protection laws and enforcement.</p>
+          <a href="#" class="feature-link">View policy work <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+          <h3>Corporate Partnerships</h3>
+          <p>We help businesses achieve carbon neutrality through verified reforestation and sustainable sourcing.</p>
+          <a href="#" class="feature-link">Partner with us <i class="fas fa-arrow-right"></i></a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Stats Section -->
   <section class="stats-section">
-    <div class="stats-container">
-      <div class="stat-item">
-        <div class="stat-number" id="trees-planted">0</div>
-        <div class="stat-label">Trees Planted</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" id="forest-restored">0</div>
-        <div class="stat-label">Acres Restored</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" id="species-saved">0</div>
-        <div class="stat-label">Species Protected</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" id="volunteers">0</div>
-        <div class="stat-label">Active Volunteers</div>
+    <div class="container">
+      <h2 class="section-title" style="color: white; margin-bottom: 60px;">Our Impact by Numbers</h2>
+      <div class="stats-container">
+        <div class="stat-item">
+          <div class="stat-number" id="trees-planted">100</div>
+          <div class="stat-label">Trees Planted</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="forest-restored">0</div>
+          <div class="stat-label">Hectares Restored</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="species-saved">0</div>
+          <div class="stat-label">Species Protected</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="volunteers">0</div>
+          <div class="stat-label">Active Volunteers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="countries">0</div>
+          <div class="stat-label">Countries Active</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Blog Section -->
-  <section class="blog-section">
-    <h2 class="section-title">🌿 Reforestation Stories</h2>
-    <div class="blog-cards">
-      <div class="blog-card">
-        <img src="https://images.unsplash.com/photo-1506765515384-028b60a970df" alt="Tree Plantation">
-        <div class="blog-card-content">
-          <h3>Planting Trees, Saving Lives</h3>
-          <p>Discover how tree plantations help reduce carbon and support ecosystems worldwide while improving human health and livelihoods.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+  <!-- Impact Section -->
+  <section class="impact-section section-padding">
+    <div class="container">
+      <h2 class="section-title">Our Global Projects</h2>
+      <p class="section-subtitle">Explore some of our most impactful reforestation initiatives around the world.</p>
+      
+      <div class="impact-tabs">
+        <button class="tab-btn active" data-tab="americas">Americas</button>
+        <button class="tab-btn" data-tab="africa">Africa</button>
+        <button class="tab-btn" data-tab="asia">Asia</button>
+        <button class="tab-btn" data-tab="europe">Europe</button>
+      </div>
+      
+      <!-- Americas Content (existing) -->
+      <div class="tab-content active" id="americas">
+        <div class="impact-grid">
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1511497584788-876760111969" alt="Amazon rainforest">
+            <div class="impact-text">
+              <h3>Amazon Rainforest Initiative</h3>
+              <p>Working with indigenous communities to protect 500,000 hectares of primary forest and restore degraded areas.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1511497584788-876760111969" alt="California forest">
+            <div class="impact-text">
+              <h3>California Fire Recovery</h3>
+              <p>Replanting native species in fire-affected areas with drought-resistant seedlings and fire prevention measures.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1511497584788-876760111969" alt="Central America">
+            <div class="impact-text">
+              <h3>Central American Corridor</h3>
+              <p>Creating wildlife corridors across 7 countries to protect migratory species and improve ecosystem connectivity.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Africa Content (existing) -->
+      <div class="tab-content" id="africa">
+        <div class="impact-grid">
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81" alt="Congo Basin">
+            <div class="impact-text">
+              <h3>Congo Basin Protection</h3>
+              <p>Training local rangers in conservation technology to combat illegal logging in the world's second largest rainforest.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35" alt="Sahel region">
+            <div class="impact-text">
+              <h3>Great Green Wall</h3>
+              <p>Supporting the African Union's initiative to grow an 8,000km natural barrier against desertification.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995" alt="Madagascar">
+            <div class="impact-text">
+              <h3>Madagascar Reforestation</h3>
+              <p>Restoring unique habitats for lemurs and other endemic species through community-led nurseries.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Asia Content (new) -->
+      <div class="tab-content" id="asia">
+        <div class="impact-grid">
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b" alt="Indonesian rainforest">
+            <div class="impact-text">
+              <h3>Indonesian Rainforest Conservation</h3>
+              <p>Protecting critical orangutan habitats while developing sustainable palm oil alternatives for local communities.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60" alt="Himalayan forests">
+            <div class="impact-text">
+              <h3>Himalayan Forest Initiative</h3>
+              <p>Restoring high-altitude forests to protect watersheds for millions downstream and preserve snow leopard habitats.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be" alt="Mangroves">
+            <div class="impact-text">
+              <h3>Southeast Asian Mangrove Restoration</h3>
+              <p>Replanting coastal mangroves to protect communities from storms while creating carbon-sequestering ecosystems.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Europe Content (new) -->
+      <div class="tab-content" id="europe">
+        <div class="impact-grid">
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07" alt="Białowieża Forest">
+            <div class="impact-text">
+              <h3>Białowieża Forest Protection</h3>
+              <p>Preserving Europe's last primeval forest ecosystem and its European bison population through sustainable management.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef" alt="Alpine forests">
+            <div class="impact-text">
+              <h3>Alpine Reforestation Program</h3>
+              <p>Stabilizing mountain slopes with native tree species to prevent erosion and protect ski resort communities.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="impact-item">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4" alt="Scottish Highlands">
+            <div class="impact-text">
+              <h3>Scottish Highlands Restoration</h3>
+              <p>Reintroducing native Caledonian forest to reverse centuries of deforestation and restore original ecosystems.</p>
+              <a href="#" class="feature-link">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="blog-card">
-        <img src="https://images.unsplash.com/photo-1506765515384-028b60a970df" alt="Forest Recovery">
-        <div class="blog-card-content">
-          <h3>Forests That Came Back</h3>
-          <p>These are some of the most successful reforestation projects around the globe, showing nature's incredible resilience.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+  <!-- Map Section -->
+  <section id="map" class="map-section">
+    <div class="container">
+      <div class="map-container">
+        <h2>Global Deforestation Monitoring</h2>
+        <p>Our interactive map shows real-time forest cover changes, protected areas, and restoration projects worldwide.</p>
+        
+        <!-- Replace the placeholder with your map iframe -->
+        <div class="map-embed" style="height: 600px; width: 100%; margin: 40px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.15);">
+          <iframe src="index.html" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+        
+        <div style="text-align: center;">
+          <a href="index.html" class="btn" target="_blank" style="margin-top: 20px;">Open Fullscreen Map</a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="blog-card">
-        <img src="https://images.unsplash.com/photo-1506765515384-028b60a970df" alt="Volunteers">
-        <div class="blog-card-content">
-          <h3>Youth Leading the Green Change</h3>
-          <p>Meet young volunteers who are turning barren lands into green zones through innovative techniques and community engagement.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+  <!-- Testimonials Section -->
+  <section class="testimonials-section section-padding">
+    <div class="container">
+      <h2 class="section-title">Voices of Change</h2>
+      <p class="section-subtitle">Hear from those directly impacted by our work.</p>
+      
+      <div class="testimonials-slider">
+        <div class="testimonial">
+          <div class="testimonial-content">
+            "Forest Watch's technology helped our community detect illegal logging operations we never could have found on our own. Now we're planting 10,000 trees annually and have created sustainable jobs for 50 families."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria Gutierrez">
+            <div class="author-info">
+              <h4>Maria Gutierrez</h4>
+              <p>Community Leader, Peru</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="get-involved" class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Make a Difference?</h2>
+        <p>Whether you want to volunteer, donate, or simply stay informed, your support helps protect our planet's vital forests.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-accent">Donate Now</a>
+          <a href="#" class="btn btn-outline">Volunteer Opportunities</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Newsletter Section -->
-  <section class="newsletter-section">
-    <div class="newsletter-container">
-      <h2 class="section-title">Join Our Movement</h2>
-      <p>Subscribe to our newsletter for updates on reforestation projects and how you can help.</p>
-      <form class="newsletter-form">
-        <input type="email" class="newsletter-input" placeholder="Your email address" required>
-        <button type="submit" class="newsletter-btn">Subscribe</button>
-      </form>
+  <section class="newsletter-section section-padding">
+    <div class="container">
+      <div class="newsletter-container">
+        <h2 class="section-title">Stay Connected</h2>
+        <p>Subscribe to receive monthly updates on our projects, deforestation alerts, and ways you can help.</p>
+        <form class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+        <p style="margin-top: 20px; font-size: 0.9rem;">We respect your privacy. Unsubscribe at any time.</p>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Forest Watch</h3>
-        <p>Dedicated to monitoring forest health and promoting sustainable reforestation practices worldwide.</p>
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <div class="footer-logo">FOREST WATCH</div>
+          <div class="footer-about">
+            <p>A global initiative harnessing technology and community action to protect and restore the world's forests since 2015.</p>
+          </div>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#map">Deforestation Map</a></li>
+            <li><a href="#">Our Projects</a></li>
+            <li><a href="#">Get Involved</a></li>
+            <li><a href="#">Resources</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Ways to Help</h3>
+          <ul class="footer-links">
+            <li><a href="#">Donate</a></li>
+            <li><a href="#">Volunteer</a></li>
+            <li><a href="#">Corporate Partnerships</a></li>
+            <li><a href="#">Start a Fundraiser</a></li>
+            <li><a href="#">Advocate</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul class="contact-info">
+            <li><i class="fas fa-map-marker-alt"></i> 123 Conservation Way, Green City, GC 12345</li>
+            <li><i class="fas fa-phone"></i> +1 (800) 123-4567</li>
+            <li><i class="fas fa-envelope"></i> info@forestwatch.org</li>
+            <li><i class="fas fa-clock"></i> Mon-Fri: 9AM - 5PM GMT</li>
+          </ul>
         </div>
       </div>
-      <div class="footer-column">
-        <h3>Quick Links</h3>
-        <ul class="footer-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Projects</a></li>
-          <li><a href="#">Get Involved</a></li>
-          <li><a href="#">Resources</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
+      
+      <div class="copyright">
+        &copy; 2023 Forest Watch International. All rights reserved. | <a href="#" style="color: white; text-decoration: underline;">Privacy Policy</a> | <a href="#" style="color: white; text-decoration: underline;">Terms of Service</a>
       </div>
-      <div class="footer-column">
-        <h3>Contact</h3>
-        <ul class="footer-links">
-          <li><i class="fas fa-map-marker-alt"></i> 123 Greenway, Forest City</li>
-          <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-          <li><i class="fas fa-envelope"></i> info@forestwatch.org</li>
-        </ul>
-      </div>
-    </div>
-    <div class="copyright">
-      &copy; 2023 Forest Watch. All rights reserved.
     </div>
   </footer>
 
@@ -726,7 +1427,7 @@
 
   <script>
     // Animated counter for statistics
-    function animateCounter(element, target, duration = 2000) {
+    function animateCounter(element, target, duration = 3000) {
       const start = 0;
       const increment = target / (duration / 16);
       let current = start;
@@ -738,7 +1439,20 @@
           clearInterval(timer);
           current = target;
         }
-        el.textContent = Math.floor(current).toLocaleString();
+        
+        if (element === 'trees-planted') {
+          el.textContent = Math.floor(current).toLocaleString() + '+';
+        } else if (element === 'forest-restored') {
+          el.textContent = Math.floor(current).toLocaleString() + '+';
+        } else if (element === 'species-saved') {
+          el.textContent = Math.floor(current).toLocaleString() + '+';
+        } else if (element === 'volunteers') {
+          el.textContent = Math.floor(current).toLocaleString() + '+';
+        } else if (element === 'countries') {
+          el.textContent = Math.floor(current) + '+';
+        } else {
+          el.textContent = Math.floor(current).toLocaleString();
+        }
       }, 16);
     }
     
@@ -751,6 +1465,7 @@
             animateCounter('forest-restored', 8500);
             animateCounter('species-saved', 420);
             animateCounter('volunteers', 15600);
+            animateCounter('countries', 12);
           }
           entry.target.classList.add('animated');
         }
@@ -758,7 +1473,7 @@
     }, { threshold: 0.1 });
     
     // Observe elements
-    document.querySelectorAll('.benefit, .blog-card, .stat-item').forEach(el => {
+    document.querySelectorAll('.feature-card, .impact-item, .stat-item, .testimonial').forEach(el => {
       observer.observe(el);
     });
     
@@ -784,10 +1499,28 @@
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
           window.scrollTo({
-            top: targetElement.offsetTop - 80,
+            top: targetElement.offsetTop - 100,
             behavior: 'smooth'
           });
         }
+      });
+    });
+    
+    // Tab functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        
+        // Remove active class from all buttons and contents
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        btn.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
       });
     });
     
@@ -798,9 +1531,18 @@
         e.preventDefault();
         const email = this.querySelector('input').value;
         // Here you would typically send the email to your server
-        alert(`Thank you for subscribing with ${email}! We'll keep you updated on our reforestation efforts.`);
+        alert(`Thank you for subscribing with ${email}! You'll receive our next newsletter soon.`);
         this.reset();
       });
+    }
+    
+    // Initialize counters on page load for elements already in view
+    if (document.getElementById('trees-planted').getBoundingClientRect().top < window.innerHeight) {
+      animateCounter('trees-planted', 1250000);
+      animateCounter('forest-restored', 8500);
+      animateCounter('species-saved', 420);
+      animateCounter('volunteers', 15600);
+      animateCounter('countries', 12);
     }
   </script>
 </body>
