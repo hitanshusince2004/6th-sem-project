@@ -215,10 +215,10 @@ function showInfoPanel(data) {
             <p>Native Species: ${data.reforestation.nativeSpecies.join(', ')}</p>
         </div>
         <div class="info-item">
-            <a href="#" id="json-link">View as JSON</a>
+            <a href="#" id="json-link">Report</a>
         </div>
     `;
-
+    https://classroom.google.com/c/NzMyNzg1NTY3ODU2/p/NzYyNTE0MDE1ODU5/details
     document.getElementById('json-link').addEventListener('click', async (e) => {
         e.preventDefault();
         const jsonString = JSON.stringify(data, null, 4);
