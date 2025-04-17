@@ -183,7 +183,10 @@ button[onclick="showReforestationPanel()"]:focus {
     placeholder="Search for a place..."
     style="position: absolute; top: 20px; left: 50px; z-index: 1001; padding: 10px; width: 250px; border-radius: 8px; border: 1px solid #ccc;"
     />
-
+    <div id="controls">
+        <button onclick="loadImage()">Load Single Image</button>
+        <button onclick="loadCollection()">Load ImageCollection</button>
+      </div>
     <div id="map"></div>
     <div id="info-panel">
         <div class="panel-header">

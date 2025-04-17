@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@google/generative-ai": "^0.24.0",
+    "@google/earthengine": "^1.5.11",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "leaflet": "^1.9.4",

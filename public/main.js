@@ -549,5 +549,242 @@ map.on('click', async (e) => {
     createDeforestationChart(reforestationData);
 });
 
+
+
+let eeLayer = null;
+let currentDataset = null;
+
+// Add legend control
+const legend = L.control({ position: 'bottomright' });
+let legendVisible = false;
+
+// Band selection UI
+function createBandSelector(datasetInfo) {
+  const controls = document.getElementById('controls');
+  
+  // Clear previous band controls
+  const existingBandDiv = document.getElementById('band-selection');
+  if (existingBandDiv) controls.removeChild(existingBandDiv);
+  
+  const bandDiv = document.createElement('div');
+  bandDiv.id = 'band-selection';
+  bandDiv.style.marginTop = '10px';
+  
+  if (datasetInfo.bands) {
+    bandDiv.innerHTML = '<h4>Band Selection</h4>';
+    
+    // Create checkboxes for each band
+    datasetInfo.bands.forEach(band => {
+      const div = document.createElement('div');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = `band-${band}`;
+      checkbox.value = band;
+      checkbox.checked = datasetInfo.defaultBands.includes(band);
+      
+      const label = document.createElement('label');
+      label.htmlFor = `band-${band}`;
+      label.textContent = band;
+      
+      div.appendChild(checkbox);
+      div.appendChild(label);
+      bandDiv.appendChild(div);
+    });
+    
+    // Add apply button
+    const applyBtn = document.createElement('button');
+    applyBtn.textContent = 'Apply Band Selection';
+    applyBtn.onclick = applyBandSelection;
+    bandDiv.appendChild(applyBtn);
+  } else {
+    bandDiv.innerHTML = '<p>No band selection available for this dataset</p>';
+  }
+  
+  controls.appendChild(bandDiv);
+}
+
+function applyBandSelection() {
+  const checkboxes = document.querySelectorAll('#band-selection input[type="checkbox"]:checked');
+  const selectedBands = Array.from(checkboxes).map(cb => cb.value);
+  
+  if (selectedBands.length === 0) {
+    alert('Please select at least one band');
+    return;
+  }
+  
+  if (currentDataset === 'LANDSAT/LC08/C02/T1_L2/LC08_044034_20201020') {
+    loadImage(selectedBands);
+  } else if (currentDataset === 'ESA/WorldCover/v200') {
+    loadCollection();
+  }
+}
+
+// Enhanced loadImage function with band selection
+async function loadImage(bands = ['SR_B4', 'SR_B3', 'SR_B2']) {
+  currentDataset = 'LANDSAT/LC08/C02/T1_L2/LC08_044034_20201020';
+  try {
+    const response = await fetch('http://localhost:3000/get-mapdata', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        dataset: currentDataset,
+        visParams: {
+          bands: bands,
+          min: 0,
+          max: 30000
+        }
+      })
+    });
+    
+    const { tileUrl } = await response.json();
+    addEELayer(tileUrl);
+    
+    // Update band selector
+    createBandSelector({
+      bands: ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7'],
+      defaultBands: bands
+    });
+    
+    // Remove legend for non-classified data
+    legend.remove();
+    legendVisible = false;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Enhanced loadCollection function
+async function loadCollection() {
+  currentDataset = 'ESA/WorldCover/v200';
+  try {
+    const worldCoverPalette = [
+      '006400', // 10 - Tree cover
+      'ffbb22', // 20 - Shrubland
+      'ffff4c', // 30 - Grassland
+      'f096ff', // 40 - Cropland
+      'fa0000', // 50 - Built-up
+      'b4b4b4', // 60 - Bare/sparse vegetation
+      'f0f0f0', // 70 - Snow and ice
+      '0064c8', // 80 - Water bodies
+      '0096a0', // 90 - Herbaceous wetland
+      '00cf75', // 95 - Mangroves
+      'fae6a0'  // 100 - Moss and lichen
+    ];
+    
+    const response = await fetch('http://localhost:3000/get-mapdata', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        dataset: currentDataset,
+        visParams: {
+          bands: ['Map'],
+          min: 10,
+          max: 100,
+          palette: worldCoverPalette
+        }
+      })
+    });
+    
+    const { tileUrl } = await response.json();
+    addEELayer(tileUrl);
+    
+    // No band selection for WorldCover
+    createBandSelector({});
+    
+    // Add legend for WorldCover
+    updateLegend([
+      { label: 'Tree cover', color: '#006400' },
+      { label: 'Shrubland', color: '#ffbb22' },
+      { label: 'Grassland', color: '#ffff4c' },
+      { label: 'Cropland', color: '#f096ff' },
+      { label: 'Built-up', color: '#fa0000' },
+      { label: 'Bare vegetation', color: '#b4b4b4' },
+      { label: 'Snow and ice', color: '#f0f0f0' },
+      { label: 'Water bodies', color: '#0064c8' },
+      { label: 'Wetland', color: '#0096a0' },
+      { label: 'Mangroves', color: '#00cf75' },
+      { label: 'Moss/lichens', color: '#fae6a0' }
+    ]);
+    
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Legend control
+function updateLegend(items) {
+  legend.onAdd = function(map) {
+    const div = L.DomUtil.create('div', 'info legend');
+    div.style.backgroundColor = 'white';
+    div.style.padding = '10px';
+    div.style.borderRadius = '5px';
+    
+    items.forEach(item => {
+      div.innerHTML += `
+        <div style="display: flex; align-items: center; margin: 5px 0;">
+          <div style="width: 20px; height: 20px; background-color: ${item.color}; margin-right: 8px;"></div>
+          <span>${item.label}</span>
+        </div>
+      `;
+    });
+    
+    return div;
+  };
+  
+  if (!legendVisible) {
+    legend.addTo(map);
+    legendVisible = true;
+  } else {
+    legend.update();
+  }
+}
+
+// Rest of your existing code (addEELayer function, etc.) remains the same
+function addEELayer(tileUrl) {
+  // Clear previous layer
+  if (eeLayer) {
+    map.removeLayer(eeLayer);
+    eeLayer = null;
+  }
+
+  // Create new layer with robust error handling
+  eeLayer = L.tileLayer(`http://localhost:3000${tileUrl}`, {
+    attribution: 'Google Earth Engine',
+    maxZoom: 18,
+    minZoom: 1,
+    tileSize: 256,
+    crossOrigin: 'anonymous',
+    detectRetina: false,
+    // Add retry logic
+    retryLimit: 3,
+    retryDelay: 1000,
+    // Error tile placeholder (transparent 1x1 pixel)
+    errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+  });
+
+  // Enhanced error handling
+  eeLayer
+    .on('tileerror', function(error) {
+      console.error('Tile load failed:', {
+        url: error.tile?.src,
+        coords: error.coords,
+        message: error.message || 'Unknown tile error'
+      });
+    })
+    .on('tileload', function(e) {
+      console.log('Tile loaded:', e.tile.src);
+    });
+
+  eeLayer.addTo(map);
+  
+  // Force redraw to ensure tiles load
+  setTimeout(() => {
+    map.invalidateSize();
+    eeLayer.redraw();
+  }, 500);
+}
+
 // Initialize map
 initializeMap();
+
+
